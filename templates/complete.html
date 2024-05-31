@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completion</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">NIS2 Assessment - High level Results</h1>
+    </div>
+    <div class="complete-container">
+        <!-- Unified background section -->
+        <div class="complete-background">
+            <!-- Header section -->
+
+            <!-- Main section for text and overall score graph -->
+            <div class="complete-main-section">
+                <!-- Left container for text, score, and buttons -->
+                <div class="complete-main-left">
+                    <p><strong>Congratulations, you have completed the NIS2 Regulatory Assessment!</strong></p>
+                    <table class="complete-score-table">
+                        <tr>
+                            <td>Your total score is:</td>
+                            <td><span class="score">{{ total_score }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Percentage of NIS2 Compliance:</td>
+                            <td><span class="score">{{ compliance_percentage|int }}%</span></td>
+                        </tr>
+                    </table>
+                    <div class="results-link-container">
+                        <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
+                        <a href="{{ url_for('results') }}" class="pink-button">View Detailed Results</a>
+                        <!-- <a href="{{ url_for('view_results') }}" class="pink-button">View Results **TESTING**</a>
+                        <a href="{{ url_for('view_feedback') }}" class="pink-button">View Feedback **TESTING**</a> -->
+                    </div>
+                </div>
+                <!-- Right container for overall score graph -->
+                <div class="complete-main-right">
+                    <h3>Overall Score</h3>
+                    <img src="{{ overall_chart_path }}" alt="Overall Score Chart" class="complete-bar-chart">
+                </div>
+            </div>
+            <!-- Content section for individual article graphs -->
+            <div class="complete-content-section">
+                <!-- Left column for graphs -->
+                <div class="complete-column">
+                    {% for article, chart_path in left_column_articles %}
+                        <div class="complete-article-section">
+                            <h3>{{ article }} (Total Questions: {{ article_scores[article]['max_score'] // 2 }})</h3>
+                            <p>Score: {{ article_scores[article]['score'] }} out of a possible {{ article_scores[article]['max_score'] }}</p>
+                            <img src="{{ chart_path }}" alt="Bar Chart for {{ article }}" class="complete-bar-chart">
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Right column for graphs -->
+                <div class="complete-column">
+                    {% for article, chart_path in right_column_articles %}
+                        <div class="complete-article-section">
+                            <h3>{{ article }} (Total Questions: {{ article_scores[article]['max_score'] // 2 }})</h3>
+                            <p>Score: {{ article_scores[article]['score'] }} out of a possible {{ article_scores[article]['max_score'] }}</p>
+                            <img src="{{ chart_path }}" alt="Bar Chart for {{ article }}" class="complete-bar-chart">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+       </div>
+        <div class="complete-header-image">
+                <img src="/static/images/Cyber-Word-Cloud.png" alt="Cyber Word Cloud" class="compliance-image">
+            </div>
+
+    </div>
+</body>
+</html>

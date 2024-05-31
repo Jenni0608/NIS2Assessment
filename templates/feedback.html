@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feedback Form</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">User Feedback Form</h1>
+    </div>
+
+    <div class="feedback-container">
+        <div class="feedback-inner-container">
+            <form action="/submit_feedback" method="POST">
+                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                <div class="feedback-section">
+                    <h2>User Information</h2>
+
+                    <label for="familiarity">1. How would you rate your familiarity with NIS2 Directive and ISO 270001 controls?</label>
+                    <select id="familiarity" name="familiarity">
+                        <option value="not_familiar">Not familiar</option>
+                        <option value="somewhat_familiar">Somewhat familiar</option>
+                        <option value="familiar">Familiar</option>
+                        <option value="very_familiar">Very familiar</option>
+                    </select>
+
+                    <label for="role">2. What is your role within your organisation?</label>
+                    <select id="role" name="role">
+                        <option value="it_security_professional">IT Security Professional</option>
+                        <option value="compliance_officer">Compliance Officer</option>
+                        <option value="it_manager">IT Manager</option>
+                        <option value="risk_manager">Risk Manager</option>
+                        <option value="consultant">Consultant</option>
+                        <option value="other">Other (please specify)</option>
+                    </select>
+
+                    <label for="experience">3. How many years experience do you have in IT?</label>
+                    <select id="experience" name="experience">
+                        <option value="0_5">0 - 5</option>
+                        <option value="6_10">6 - 10</option>
+                        <option value="11_15">11 - 15</option>
+                        <option value="15_20">15 - 20</option>
+                        <option value="21_plus">21+</option>
+                    </select>
+                </div>
+            </div>
+            <div class="feedback-inner-container">
+                <div class="feedback-section">
+                    <h2>Assessment Tool Usability</h2>
+
+                    <label>1. I think that I would like to use this assessment tool frequently</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="use_frequently" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="use_frequently" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="use_frequently" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="use_frequently" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="use_frequently" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>2. I found the assessment tool unnecessarily complex</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="complexity" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="complexity" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="complexity" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="complexity" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="complexity" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>3. I thought the assessment tool was easy to use</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="ease_of_use" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="ease_of_use" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="ease_of_use" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="ease_of_use" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="ease_of_use" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>4. I think that I would need the support of a technical person to be able to use this assessment tool</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="need_support" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="need_support" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="need_support" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="need_support" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="need_support" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>5. I found the various functions in this assessment tool were well integrated</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="integration" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="integration" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="integration" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="integration" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="integration" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>6. I thought there was too much inconsistency in this assessment tool</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="inconsistency" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="inconsistency" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="inconsistency" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="inconsistency" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="inconsistency" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>7. I would imagine that most people would learn to use this assessment tool very quickly</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="learn_quickly" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="learn_quickly" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="learn_quickly" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="learn_quickly" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="learn_quickly" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>8. I found the assessment tool very cumbersome to use</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="cumbersome" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="cumbersome" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="cumbersome" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="cumbersome" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="cumbersome" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>9. I felt very confident using the assessment tool</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="confidence" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="confidence" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="confidence" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="confidence" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="confidence" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>10. I needed to learn a lot of things before I could get going with this assessment tool</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="learning_curve" value="Strongly Agree" required> Strongly Agree</label></div>
+                        <div><label><input type="radio" name="learning_curve" value="Agree"> Agree</label></div>
+                        <div><label><input type="radio" name="learning_curve" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="learning_curve" value="Disagree"> Disagree</label></div>
+                        <div><label><input type="radio" name="learning_curve" value="Strongly Disagree"> Strongly Disagree</label></div>
+                    </div>
+
+                    <label>11. How easy was it to navigate through the assessment tool?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="navigation" value="Very easy" required> Very easy</label></div>
+                        <div><label><input type="radio" name="navigation" value="Easy"> Easy</label></div>
+                        <div><label><input type="radio" name="navigation" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="navigation" value="Difficult"> Difficult</label></div>
+                        <div><label><input type="radio" name="navigation" value="Very difficult"> Very difficult</label></div>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-inner-container">
+                <div class="feedback-section">
+                    <h2>Content and Relevance</h2>
+
+                    <label>1. How relevant were the multiple-choice questions to your organization's operations and security measures?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="relevance" value="Very relevant" required> Very relevant</label></div>
+                        <div><label><input type="radio" name="relevance" value="Relevant"> Relevant</label></div>
+                        <div><label><input type="radio" name="relevance" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="relevance" value="Irrelevant"> Irrelevant</label></div>
+                        <div><label><input type="radio" name="relevance" value="Very irrelevant"> Very irrelevant</label></div>
+                    </div>
+
+                    <label>2. How comprehensive did you find the coverage of NIS2 in-scope controls in the assessment?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="comprehensive" value="Very comprehensive" required> Very comprehensive</label></div>
+                        <div><label><input type="radio" name="comprehensive" value="Comprehensive"> Comprehensive</label></div>
+                        <div><label><input type="radio" name="comprehensive" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="comprehensive" value="Limited"> Limited</label></div>
+                        <div><label><input type="radio" name="comprehensive" value="Very limited"> Very limited</label></div>
+                    </div>
+
+                    <label>3. Were the recommendations provided at the end of the assessment useful?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="useful_recommendations" value="Very useful" required> Very useful</label></div>
+                        <div><label><input type="radio" name="useful_recommendations" value="Useful"> Useful</label></div>
+                        <div><label><input type="radio" name="useful_recommendations" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="useful_recommendations" value="Not useful"> Not useful</label></div>
+                        <div><label><input type="radio" name="useful_recommendations" value="Very not useful"> Very not useful</label></div>
+                    </div>
+
+                    <label>4. Overall, how satisfied are you with the NIS2 Regulatory Assessment Tool?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="overall_satisfaction" value="Very satisfied" required> Very satisfied</label></div>
+                        <div><label><input type="radio" name="overall_satisfaction" value="Satisfied"> Satisfied</label></div>
+                        <div><label><input type="radio" name="overall_satisfaction" value="Neutral"> Neutral</label></div>
+                        <div><label><input type="radio" name="overall_satisfaction" value="Unsatisfied"> Unsatisfied</label></div>
+                        <div><label><input type="radio" name="overall_satisfaction" value="Very unsatisfied"> Very unsatisfied</label></div>
+                    </div>
+
+                    <label>5. Would you recommend this tool to others in your field?</label>
+                    <div class="radio-group">
+                        <div><label><input type="radio" name="recommend" value="Yes" required> Yes</label></div>
+                        <div><label><input type="radio" name="recommend" value="No"> No</label></div>
+                    </div>
+                </div>
+            </div>
+            <div class="feedback-inner-container">
+                <div class="feedback-section">
+                    <h2>Open Questions</h2>
+
+                    <label for="best_feature">1. The best feature of this assessment tool was:</label>
+                    <textarea name="best_feature" id="best_feature" rows="3"></textarea>
+
+                    <label for="biggest_difficulty">2. The biggest difficulty I had with this assessment tool was:</label>
+                    <textarea name="biggest_difficulty" id="biggest_difficulty" rows="3"></textarea>
+
+                    <label for="missing_feature">3. The feature I think is missing from the assessment tool is:</label>
+                    <textarea name="missing_feature" id="missing_feature" rows="3"></textarea>
+
+                    <label for="additional_comments">Any other comments:</label>
+                    <textarea name="additional_comments" id="additional_comments" rows="3"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="pink-button">Submit Feedback</button>
+            <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Form</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">Information Sheet & Consent Form</h1>
+    </div>
+
+    <div class="consent-container">
+        <!-- Introductory statement section with image -->
+        <div class="intro-section">
+            <div class="intro-left">
+                <h3 class="section-title">Introductory statement:</h3>
+                <p>Ms. Jenni Parry<br>
+                UCD School of Computer Science<br>
+                University College Dublin<br>
+                The Regulatory Assessment Tool is designed to measure compliance with NIS2 Cybersecurity risk-management measures (Article 21).</p>
+            </div>
+            <div class="intro-right">
+                <img src="https://logowik.com/content/uploads/images/university-college-dublin4379.jpg" alt="UCD Logo" class="intro-image">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">What is this research about?</h3>
+            <p>Compliance is assessed through a set of multiple-choice questions that evaluate the effectiveness of the NIS2 in-scope controls. Each risk-management measure was mapped to a number of ISO 270001 controls from the 2022 version and guidance from ENISA defines a number of controls which will apply to operators of essential services. These controls are seen as the minimum required security measures.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Why am I doing this research?</h3>
+            <p>This research will measure the effectiveness and usability of the NIS2 Regulatory Assessment Tool by assessing the mapping of the ISO Controls to each of the NIS2 articles and requirements, along with the value of the recommendations provided to ensure compliance with the new directive.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">How will your data be used?</h3>
+            <p>The resulting data will be stored as summary tables with numeric ratings for the score and compliance percentage along with the users’ choices.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">What will happen if you decide to take part in this research study?</h3>
+            <p>Nothing, individual results are anonymous, and your data is not identifiable.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">How will I protect your privacy?</h3>
+            <p>Personal data will not be recorded, and the study is fully anonymous.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">What are the benefits of taking part in this research study?</h3>
+            <p>The assessment is a comprehensive gap analysis tool that measures compliance through a set of multiple-choice questions, evaluating the effectiveness of the NIS2 in-scope controls. The tool provides a report of recommendations that can be implemented to improve security posture and overall compliance with the NIS2 Directive.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">What are the risks of taking part in this research study?</h3>
+            <p>The assessment may identify areas of weaknesses or vulnerabilities within the users' IT environment.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Can I change my mind at any stage and withdraw from the study?</h3>
+            <p>Yes, you can withdraw from the study at any stage.</p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">How will I find out what happens with this project?</h3>
+            <p>Please contact Jenni Parry (jenni.parry@ucdconnect.ie) if you have any questions, comments, or concerns.</p>
+        </div>
+
+
+        <h1>Research Disclaimer</h1>
+        <p>The NIS2 Cybersecurity Regulatory Assessment Tool is developed for research and informational purposes only. It assesses compliance with Article 21 of the NIS2 Directive using a knowledge model stored in GraphDB. The results and recommendations are not legal advice and do not guarantee compliance. Users should consult legal and cybersecurity professionals for comprehensive assessments. By using this Tool, you acknowledge that I am not liable for any consequences arising from its use. For further information, please contact jenni.parry@ucdconnect.ie.</p>
+
+        <h1>Consent Form</h1>
+        <p>For ethical reasons, it is extremely important that you give your fully informed consent to participate in this study. If you would like to participate, please complete this section.</p>
+
+        <div class="form-section">
+            <p><strong>DECLARATION</strong></p>
+            <ul>
+                <li>I confirm that I am over the age of 18.</li>
+                <li>I have read the information sheet (previous page) and have had time to consider whether to take part in this study.</li>
+                <li>I agree to take part in this research.</li>
+                <li>I understand that my participation is voluntary (it is my choice) and that I am free to withdraw from the research at any time without disadvantage or penalty.</li>
+                <li>I agree that the data arising from this research can be published and that I will not be identified in any way.</li>
+                <li>If you have any questions about this research, please contact me at jenni.parry@ucdconnect.ie.</li>
+            </ul>
+
+            <h3>Do you consent and would like to continue with the assessment?</h3>
+            <form action="{{ url_for('consent') }}" method="POST">
+                <button type="submit" name="consent" value="yes" class="pink-button">Begin Assessment</button>
+                <button type="submit" name="consent" value="no" class="pink-button">No, I do not consent</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

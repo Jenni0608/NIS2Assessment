@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results and Recommendations</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Main container for the results page -->
+
+        <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">Results and Recommendations</h1>
+    </div>
+
+    <div class="results-container">
+        <!-- Header section -->
+        <!-- Loop through each implementation status (e.g., Not Implemented, Partially Implemented, Fully Implemented) -->
+        {% for implementation_status, articles in grouped_results.items() %}
+            <div class="implementation-group">
+                <!-- Heading for the implementation status -->
+                <h2 class="implementation-heading">{{ implementation_status }}</h2>
+
+                <!-- Loop through each article under the current implementation status -->
+                {% for article_label, results in articles.items() %}
+                    <div class="article-group">
+                        <!-- Article heading with the article label and definition -->
+                        <h3 class="article-heading">{{ article_label }} - {{ article_details[article_label] }}</h3>
+
+                        <!-- List of results for the current article -->
+                        <ul class="results-list">
+                            <!-- Loop through each result (question and its answer) for the current article -->
+                            {% for result in results %}
+                                <li>
+                                    <!-- Display the question number and its corresponding answer label and definition -->
+                                    <strong>Response Q.{{ result.question_number }}:</strong>
+                                    {{ result.answerLabel }} - {{ result.answerDef }}
+
+                                    <!-- If a recommendation is available, display it -->
+                                    {% if result.recommendation %}
+                                        <p class="results-recommendation">Recommendation: {{ result.recommendation }}</p>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <!-- Buttons to navigate back to home or to download the report -->
+        <div class="button-container">
+            <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
+            <a href="{{ url_for('download_report') }}" class="pink-button">Download Report</a>
+            <a href="{{ url_for('feedback') }}" class="pink-button">User Feedback Form</a>
+        </div>
+    </div>
+</body>
+</html>

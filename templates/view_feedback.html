@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+<body>
+
+ <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">Feedback Records</h1>
+    </div>
+    <div class="view-feedback-container">
+
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in column_names %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in feedback_records %}
+                    <tr>
+                        {% for value in record %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
+    </div>
+</body>
+</html>

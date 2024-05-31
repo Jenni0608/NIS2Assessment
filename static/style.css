@@ -1,0 +1,973 @@
+/* General body styles to ensure a consistent look */
+body {
+    font-family: Roboto, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styles for primary headings */
+h1 {
+    background-color: #ff4081;  /* Vivid pink shade for the header */
+    color: #fff;
+    text-align: center;
+    padding: 1px 0;
+}
+
+/* Subheading styles for secondary headings */
+h2, h5 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Dark pink color for tertiary headings */
+h3, .question-number {
+    color: #e91e63;
+    margin-bottom: 10px;
+}
+
+/* Article title styling */
+.article-title {
+    color: black;
+    text-align: left;
+}
+
+/* Implementation title styling with custom pink color */
+.implementation-title {
+    color: #C2185B;
+    text-align: left;
+    margin-top: 20px;
+}
+
+/* Paragraph and question text styling for readability */
+p, .question-text {
+    color: #333;
+    text-align: left;
+}
+
+/* Container styling for layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    width: 80%;
+}
+
+/* Left and right article info boxes */
+.article-info-box-left, .article-info-box-right {
+    width: 46%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Right article info box text alignment */
+.article-info-box-right {
+    text-align: right;
+}
+
+/* Question container styling */
+.question-container {
+    margin: 20px auto;
+    width: 80%;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Question header styling with light pink background */
+.question-header {
+    background-color: #ffe4e9;
+    padding: 20px 30px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Answer box styling */
+.answer-box {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Article section alignment and margin */
+.article-section {
+    margin-bottom: 20px;
+    margin-left: 0;
+}
+
+/* Score container styling for layout */
+.score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+/* Article section heading styling */
+.article-section h3 {
+    margin-top: 20px;
+    color: #e91e63;
+    text-align: left;
+    margin-left: 0;
+}
+
+/* Bar chart styling */
+.bar-chart {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-left: 0;
+}
+
+/* Answer list styling */
+.answers-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Individual answer list item styling */
+.answers-list li {
+    background-color: #fce4ec;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    position: relative;
+}
+
+/* Button container styling for alignment */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Pink button styling */
+.pink-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+	margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Pink button hover effect */
+.pink-button:hover {
+    background-color: #e91e63;
+}
+
+/* Welcome page header styling */
+.welcome-header-container {
+    background-color: #ff4081;
+    padding: 1px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Welcome content container styling */
+.welcome-content-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Welcome intro text styling */
+.welcome-intro-text h2 {
+    font-size: 1.5em;
+    color: #333;
+    text-align: left;
+    margin-bottom: 20px;
+    width: 96%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Top-right content alignment */
+.welcome-right-column {
+    width: 45%;
+    float: right;
+    margin-top: 20px;
+}
+
+/* Main content column width adjustment */
+.welcome-left-column {
+    width: 50%;
+    float: left;
+    margin-top: 20px;
+}
+
+/* Assessment info section styling */
+.welcome-assessment-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Button container styling for welcome page */
+.welcome-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Pillars and measures table styling */
+.pillars-table, .measures-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+/* Table cell styling */
+.pillars-table th, .pillars-table td, .measures-table th, .measures-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Table header styling */
+.pillars-table th, .measures-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Alternate row coloring for tables */
+.pillars-table tr:nth-child(even), .measures-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover effect for table rows */
+.pillars-table tr:hover, .measures-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Table cell text size adjustment */
+.pillars-table td, .measures-table td {
+    font-size: 14px;
+}
+
+/* Clear floats after columns */
+.welcome-assessment-info:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Measures section width adjustment */
+.welcome-measures-section {
+    width: 100%;
+    margin-top: 1px;
+}
+
+/* Conclusion text styling for welcome page */
+.welcome-conclusion-text {
+    max-width: 800px;
+    text-align: left;
+    margin-top: 20px;
+    color: #e91e63;
+}
+
+/* Completion page header styling */
+.completion-header {
+    background-color: #ff4081;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+/* Completion text alignment and styling */
+.completion-text p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Margin adjustment for completion text */
+.completion-text .score {
+    margin-left: 100px;
+}
+
+/* Completion score value styling */
+.completion-text .score-value {
+    margin-right: 1000px;
+    color: #FF4081;
+    font-weight: bold;
+    display: inline;
+}
+
+/* Score table styling */
+.score-table {
+    width: auto;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+/* Score table cell styling */
+.score-table td {
+    padding: 5px 10px;
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Score value styling */
+.score-value {
+    color: #FF4081;
+    font-weight: bold;
+}
+
+/* Completion percentage value styling */
+.completion-text .percentage-value {
+    margin-right: 987px;
+    color: #FF4081;
+    font-weight: bold;
+    display: inline;
+}
+
+/* Completion text styling for emphasis */
+.completion-text {
+    margin-bottom: 5px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* Styling for the answers box on completion page */
+.answers-box {
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: left;
+    width: 60%;
+}
+
+/* Image styling for completion page */
+.completion-image-container img {
+    width: 300px;
+    float: right;
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+/* Ensure image is responsive */
+.completion-image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    align-items: center;
+}
+
+/* Remove default bullets for RDF data container */
+#rdfDataContainer ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Flex container styling for layout */
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Chart container styling */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Chart image styling */
+.chart-image {
+    max-width: 100%;
+    height: auto;
+    width: 85%;
+}
+
+/* Answers section flexbox styling */
+.answers-section {
+    flex: 1;
+    margin-right: 20px;
+}
+
+/* Styling for answer and result lists */
+.answers-list, .results-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for result list items */
+.results-list li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+/* Styling for answer list items */
+.answers-list li {
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #ffe4e9;
+    border-radius: 5px;
+}
+
+/* Bold text for answer choices */
+.answer-choice {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Link container styling for results page */
+.results-link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Styling for results link buttons */
+.results-link {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+/* Hover effect for results link buttons */
+.results-link:hover {
+    background-color: #e91e63;
+}
+
+/* General pink button styling */
+.pink-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* Hover effect for pink buttons */
+.pink-button:hover {
+    background-color: #e91e63;
+}
+
+/* Pink text styling for score */
+.score {
+    color: #ff4081;
+    font-size: 1.5em;
+}
+
+/* Compliance image container styling */
+.welcome-image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Compliance image styling */
+.compliance-image {
+    width: 80%;
+    max-width: 700px;
+    height: auto;
+}
+
+/* Right column styling for complete page */
+.complete-right-column {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 0px;
+    padding-bottom: 50px;
+    padding-right: 50px;
+}
+
+/* NIS2 icon styling */
+.NIS2-Icon {
+    width: 80%;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 1px;
+}
+
+/* Results container styling */
+.results-container {
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+
+/* Results header styling */
+.results-header {
+    background-color: #ff4081;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+/* Article group styling for results */
+.results-article-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Article title styling for results */
+.results-article-title {
+    color: #e91e63;
+    margin-top: 20px;
+}
+
+/* Status title styling for results */
+.results-status-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* List styling for results */
+.results-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+/* Individual result item styling */
+.results-item {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Recommendation box styling */
+.results-recommendation {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #fff3cd;
+    border-left: 4px solid #ffeeba;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Button container styling for results */
+.results-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Styling for pink buttons on results page */
+.results-pink-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* General styling for large pink buttons */
+.pink-button-big {
+    padding: 10px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* Hover effect for results pink buttons */
+.results-pink-button:hover {
+    background-color: #e91e63;
+}
+
+/* Hover effect for large pink buttons */
+.pink-button-big:hover {
+    background-color: #e91e63;
+}
+
+.complete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.complete-background {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.complete-header-content {
+    flex: 1;
+    text-align: left;
+}
+
+.complete-content-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping to the next line */
+}
+
+.complete-left-column, .complete-right-column {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.complete-overall-column {
+    /* width: 30%; Adjust the width to fit the layout */
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 2%; /* Add some margin to separate from the other columns */
+}
+
+.complete-score-table {
+    margin-right: 425px;
+}
+
+.results-link-container {
+    margin-top: 20px;
+}
+
+.complete-header-image {
+    margin-top: 50px;
+    align: center;
+}
+
+.complete-bar-chart, .compliance-image {
+    width: 100%;
+    height: auto;
+}
+
+.complete-bar-chart {
+    width: 600px; /* Set a fixed width */
+    height: 300px; /* Set a fixed height */
+}
+
+.complete-article-section {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; /* Center the content */
+}
+
+.complete-column-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center; /* Center items horizontally */
+}
+
+.complete-column {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    align-items: center;
+}
+
+.complete-main-section {
+    margin: 20px auto;
+    padding: 20px;
+    width: 97%;
+    background-color: #ffe4e9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left;
+    display: flex; /* Added flex display for link container */
+    flex-direction: row; /* Flex direction for row layout */
+    justify-content: center; /* Justify content to the left */
+    gap: 10px; /* Gap between items */
+    margin-right: 20px; /* Margin at the right */
+    margin-bottom: 20px; /* Margin at the bottom */
+}
+
+.complete-main-left, .complete-main-right {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.consent-container {
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: Roboto, sans-serif;
+}
+
+ p, ul {
+    color: #555;
+    line-height: 1.6;
+}
+
+ul {
+	margin-left: 20px;
+}
+
+.section {
+	margin-bottom: 30px;
+}
+
+.section-title {
+	font-size: 1.2em;
+	margin-bottom: 10px;
+	color: #e91e63;
+}
+
+.form-section {
+	background-color: #ffe4e9;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: left;
+}
+
+.feedback-container {
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    background-color: #ffe4e9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.feedback-container h1 {
+    text-align: center;
+    color: #ff4081;
+}
+
+.feedback-container h2 {
+    color: #ff4081;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.radio-group input {
+    margin-right: 10px;
+}
+
+.radio-group label {
+    margin-right: 20px;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Style for the feedback container */
+.feedback-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left;
+}
+
+/* Style for each feedback section */
+.feedback-section {
+    margin-bottom: 10px;
+}
+
+/* Style for section headings */
+.feedback-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.5em; /* Change the font size of section headings */
+}
+
+/* Style for labels */
+.feedback-section label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 1.2em; /* Change the font size of labels */
+}
+
+/* Style for dropdowns */
+.feedback-section select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em; /* Change the font size of dropdowns */
+    margin-bottom: 20px;
+}
+
+/* Style for radio buttons container */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+    padding-left: 20px; /* Add some padding to the left */
+    background-color: #fff3cd;
+}
+
+/* Style for radio buttons */
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    font-size: 1.2em; /* Adjust the font size if needed */
+    margin-right: 20px; /* Space out the labels */
+    display: flex; /* Ensure flex display for alignment */
+    align-items: center; /* Center items vertically */
+}
+
+/* Feedback container styling */
+.feedback-inner-container {
+    margin: 20px auto;
+    padding: 50px;
+    width: 80%;
+    background-color: #ffe4e9;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Style for textarea */
+.feedback-section textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em; /* Adjust the font size */
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Style for submit button */
+button[type="submit"] {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #e91e63;
+}
+
+/* Introductory statement and image styling */
+.intro-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.intro-left {
+    width: 70%;
+}
+
+.intro-right {
+    width: 25%;
+    text-align: right;
+}
+
+.intro-image {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}

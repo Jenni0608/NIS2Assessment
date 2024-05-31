@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIS2 Compliance Assessment Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">NIS2 Regulatory Assessment Questionnaire</h1>
+    </div>
+
+    <h3><em>Gap analysis against NIS2 and the ISO27001 controls framework</em></h3>
+
+    <!-- Article information container -->
+    <div id="articleInfoContainer" class="container">
+        <div class="article-info-box-left">
+            <h3>{{ article_details.prefLabel }}</h3>
+            <p>{{ article_details.definition }}</p>
+        </div>
+        <div class="article-info-box-right">
+            <p>Source: <a href="{{ article_details.source }}">{{ article_details.source }}</a></p>
+            <p>Score: <span id="totalScore">{{ session.total_score }}</span></p>
+        </div>
+    </div>
+
+    <!-- Question container -->
+    <div id="questionBox" class="question-container">
+        <div class="question-header">
+            <h3>Multiple Choice Question #{{ question_number }}</h3>
+            <p>{{ question.definition }}</p>
+        </div>
+    </div>
+
+    <!-- Answers container -->
+    <div id="rdfDataContainer" class="answer-box">
+        <form id="answerForm">
+            <ul>
+                {% for answer in answers %}
+                    <li>
+                        <input type="radio" name="answer" value="{{ answer.answerLabel }}" data-score="{{ answer.score }}">
+                        {{ answer.answerLabel }}: {{ answer.answerDef }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+
+    <!-- Submit button -->
+    <div class="button-container">
+        <button type="button" id="submitButton" class="pink-button">Submit</button>
+    </div>
+
+    <!-- jQuery and custom script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

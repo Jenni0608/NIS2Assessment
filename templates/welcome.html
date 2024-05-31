@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Header section -->
+    <div class="welcome-header-container">
+        <h1 class="welcome-header">The NIS2 Regulatory Assessment Tool</h1>
+    </div>
+
+    <!-- Main content section -->
+    <div class="welcome-content-container">
+        <!-- Introductory text -->
+        <div class="welcome-intro-text">
+            <h3><strong>The NIS Directive aims to enhance the resilience of critical sectors in the EU by promoting proactive cybersecurity measures and fostering better communication and collaboration among relevant entities. It seeks to establish a high common standard of cybersecurity across Europe.</strong></h3>
+        </div>
+
+        <!-- Assessment information section -->
+        <div class="welcome-assessment-info">
+            <!-- Left column with introductory information and start button -->
+            <div class="welcome-left-column">
+                <h4>Introducing a regulatory assessment tool designed for NIS2 compliance utilizing a unified knowledge model.</h4>
+                <p>This tool extends the Data Privacy Vocabulary (DPV), providing a comprehensive and standardized set of terms, to conduct a NIS2 gap analysis against the ISO 27001:2022 framework. Each risk-management measure is mapped to specific ISO 27001:2022 controls. Guidance from ENISA outlines a number of essential security controls required for operators of essential services, establishing the minimum required security measures.</p>
+
+                <!-- Button to begin assessment -->
+                <div class="welcome-button-container">
+                    <button id="startQuizButton" class="pink-button-big">Begin Assessment</button>
+                </div>
+                <!-- Chart image -->
+                <div class="chart-container">
+                    <img src="static/nis2_completion_chart.png" alt="NIS2 Completion Chart" class="chart-image">
+                </div>
+
+                <h4>NIS2 provides clear direction on the steps that in-scope entities must take to enhance their overall level of cybersecurity risk maturity.</h4>
+                <h4>In-scope entities must implement appropriate and proportionate technical, operational, and organisational measures to manage the risks specific to their industry or sector.</h4>
+                <h3 class="welcome-conclusion-text">Failure to comply will result in administrative fines.</h3>
+
+
+            </div>
+
+            <!-- Right column with additional information -->
+            <div class="welcome-right-column">
+                <div class="welcome-image-container">
+                    <img src="/static/images/NIS2 Icon.jpg" alt="Failure to Comply" class="NIS2-Icon">
+                </div>
+                <h3 class="dark-pink-text">Article 21 of the NIS2 Directive details ten cybersecurity risk-management measures:</h3>
+
+                <!-- Table listing the cybersecurity risk-management measures -->
+                <table class="measures-table">
+                    <tr>
+                        <td>(a) Policies on risk analysis and information system security</td>
+                        <td>(f) Policies and procedures (including testing and auditing) to assess the effectiveness of cybersecurity risk management measures</td>
+                    </tr>
+                    <tr>
+                        <td>(b) Incident handling, such as the prevention, detection, and response to incidents</td>
+                        <td>(g) Basic cyber hygiene practices and cybersecurity training</td>
+                    </tr>
+                    <tr>
+                        <td>(c) Business continuity management, including backup management, crisis management and disaster recovery</td>
+                        <td>(h) Policies and procedures regarding the use of cryptography and, where appropriate, encryption</td>
+                    </tr>
+                    <tr>
+                        <td>(d) Supply chain security including security-related aspects concerning the relationships between each entity and its suppliers or service providers</td>
+                        <td>(i) Human resources security, access control policies and asset management</td>
+                    </tr>
+                    <tr>
+                        <td>(e) Security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure</td>
+                        <td>(j) Multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate</td>
+                    </tr>
+                </table>
+
+                <p>The NIS2 Directive is the EU-wide legislation on cybersecurity. It provides legal measures to boost the overall level of cybersecurity in the EU. The NIS Directive aims to promote security measures and boost EU member states' level of protection of critical infrastructure.</p>
+            </div>
+        </div>
+
+        <!-- Section describing the four pillars of NIS2 -->
+        <div class="welcome-measures-section">
+            <h2>The requirements for NIS2 can be split into four pillars:</h2>
+            <table class="pillars-table">
+                <tr>
+                    <th>Risk Management</th>
+                    <th>Business Continuity</th>
+                    <th>Corporate Accountability</th>
+                    <th>Reporting Obligations</th>
+                </tr>
+                <tr>
+                    <td>Organisations must take necessary steps and initiatives to comply with the new Directive and minimise their cyber risks. These measures include incident management, stronger supply chain security, enhanced network security, better access control, and encryption.</td>
+                    <td>Organisations must plan for how they intend to ensure business continuity in the case of major cyber incidents. This plan should include considerations about system recovery, emergency procedures, and setting up a crisis response team.</td>
+                    <td>NIS2 requires corporate management to oversee, approve, and be trained on the entity’s cybersecurity measures and to address cyber risks. Breaches may result in penalties for management, including liability and a potential temporary ban from management roles.</td>
+                    <td>The NIS2 directive outlines specific reporting obligations and timelines. Not following this reporting process could lead to administrative fines being imposed on the entity.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle the start button click -->
+    <script>
+        document.getElementById('startQuizButton').addEventListener('click', function() {
+            window.location.href = '/consent';
+        });
+    </script>
+</body>
+</html>
