@@ -1,5 +1,4 @@
 import urllib
-
 from flask import Flask, render_template, request, session, redirect, url_for, send_file, jsonify
 import sqlite3
 import json
@@ -8,6 +7,7 @@ import binascii
 import logging
 import matplotlib
 import matplotlib.pyplot as plt
+import re
 from datetime import datetime
 from io import BytesIO
 from collections import Counter
@@ -24,77 +24,40 @@ from reportlab.lib.units import mm
 
 
 # Set up logging
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
+
+log_format = '%(asctime)s %(levelname)s:%(message)s'
+logging.basicConfig(level=logging.DEBUG, format=log_format)
+logger = logging.getLogger()
+
+# File handler
+file_handler = logging.FileHandler('/home/jenni/nis2/nis2Env/logs/application.log')
+file_handler.setFormatter(logging.Formatter(log_format))
+logger.addHandler(file_handler)
+
+# Console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(logging.Formatter(log_format))
+logger.addHandler(console_handler)
+
 
 # Generate a secret key for the Flask session
 secret_key = binascii.hexlify(os.urandom(24)).decode()
-print(secret_key)
+logging.info(f"Secret_key: {secret_key}")
 
 # Initialize Flask app
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = secret_key
 
 
-# Database initialisation (**Matches init_db.py)
-def init_db():
-    print(sqlite3.version)
-    conn = sqlite3.connect('assessment_results.db')  # This will create the database file
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id TEXT UNIQUE,
-            total_score INTEGER,
-            compliance_percentage REAL,
-            details TEXT,
-            consent TEXT,  
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS feedback (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id TEXT,
-            familiarity TEXT,
-            role TEXT,
-            experience TEXT,
-            use_frequently TEXT,
-            complexity TEXT,
-            ease_of_use TEXT,
-            need_support TEXT,
-            integration TEXT,
-            inconsistency TEXT,
-            learn_quickly TEXT,
-            cumbersome TEXT,
-            confidence TEXT,
-            learning_curve TEXT,
-            navigation TEXT,
-            relevance TEXT,
-            comprehensive TEXT,
-            useful_recommendations TEXT,
-            overall_satisfaction TEXT,
-            recommend TEXT,
-            best_feature TEXT,
-            biggest_difficulty TEXT,
-            missing_feature TEXT,
-            additional_comments TEXT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-init_db()
-
-
 # Class to handle regulatory assessment tool logic
 class RegulatoryAssessmentTool:
     def __init__(self):
+        logging.debug(f"Running RegulatoryAssessmentTool class")
+        endpoint_url = "http://localhost:7200/repositories/NIS2Ontology"
+        
 
-        endpoint_url = "http://localhost:8080/repositories/NIS2Ontology"
-        username = "admin"
-        password = "hBxGF3PtJMUgNePB"
-
+ 
         # Initialize SPARQLWrapper with the endpoint URL
         self.sparql = SPARQLWrapper(endpoint_url)
         # Mapping of question labels to scores
@@ -133,9 +96,10 @@ class RegulatoryAssessmentTool:
           FILTER (str(?answerLabel) = '{answer_label}')
         }}
         '''
-        logging.debug(f"Generated SPARQL query for get_answer_definition: {query}")
+     #   logging.debug(f"Generated SPARQL query for get_answer_definition: {query}")
         results = self.run_sparql_query(query)
         print("Leaving... get_answer_definition")
+        logging.debug("Leaving... get_answer_definition")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['answerDef']['value']
         else:
@@ -143,6 +107,11 @@ class RegulatoryAssessmentTool:
 
     def get_article_info(self, article_label):
         print("In... get_article_info")
+        logging.debug("In... get_article_info")
+        length_of_list = len(mcq_numbers)
+
+        logging.debug(f"Length of MCQ list: {length_of_list}")
+      
         """Fetches information about an article given its label."""
         query = f'''
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -159,6 +128,8 @@ class RegulatoryAssessmentTool:
         }}
         '''
         logging.debug(f"Generated SPARQL query for get_article_info: {query}")
+        print(f"(P) Generated SPARQL query for get_article_info: {query}")
+        logging.debug(f"Length of MCQ list: {length_of_list}")
         results = self.run_sparql_query(query)
         return results
 
@@ -176,6 +147,7 @@ class RegulatoryAssessmentTool:
 
     def get_question_data(self, mcq_number):
         """Fetches data for a specific question, including the question text, answers, and related article."""
+        logging.debug("In... get_question_data")
         print("In... get_question_data")
         question_data = self.run_sparql_query(f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -244,6 +216,7 @@ class RegulatoryAssessmentTool:
 
     def get_recommendation(self, mcq_number):
         """Fetches the recommendation for a given MCQ number."""
+        logging.debug("In... get_recommendation")
         print("In... get_recommendation")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -259,6 +232,7 @@ class RegulatoryAssessmentTool:
         '''
         logging.debug(f"Generated SPARQL query for get_recommendation: {query}")
         results = self.run_sparql_query(query)
+        logging.debug("Leaving... get_recommendation")
         print("Leaving... get_recommendation")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['recommendation']['value']
@@ -268,6 +242,7 @@ class RegulatoryAssessmentTool:
     def get_article_label_for_question(self, mcq_number):
         """Fetches the article label related to a specific MCQ number."""
         print("In... get_article_label_for_question")
+        logging.debug("In... get_article_label_for_question")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
@@ -280,7 +255,7 @@ class RegulatoryAssessmentTool:
                    skos:definition ?definition .
         }}
         '''
-        logging.debug(f"Generated SPARQL query for get_article_label_for_question: {query}")
+        logging.debug(f"mcq_number: {mcq_number}")
         results = self.run_sparql_query(query)
         logging.debug(f"SPARQL query results for get_article_label_for_question: {results}")
 
@@ -297,10 +272,9 @@ class RegulatoryAssessmentTool:
             return None
 
 # Fetch MCQ numbers
-import re
-
 def fetch_mcq_numbers():
     """Fetches all MCQ numbers from the ontology."""
+    logging.info('Fetching the MCQ Numbers')
     tool = RegulatoryAssessmentTool()
     query = '''
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -320,12 +294,17 @@ def fetch_mcq_numbers():
     mcq_numbers = []
     for result in results['results']['bindings']:
         uri = result['class']['value']
+        logging.debug(f'Processing URI: {uri}')
         mcq_number_match = re.search(r'MCQ\.(\d+(\.\d+)?)$', uri)
         if mcq_number_match:
             mcq_number = mcq_number_match.group(1)
             mcq_numbers.append(mcq_number)
             logging.debug(f"Added MCQ number: {mcq_number}")
-            logging.debug(f"Current MCQ numbers: {mcq_numbers}")
+            length_of_list = len(mcq_numbers)
+            logging.debug(f"Length of MCQ list: {length_of_list}")
+        else:
+            logging.warning(f'No match for URI: {uri}')
+    logging.debug(f'Current MCQ numbers before sorting: {mcq_numbers}')
 
     # Sort the MCQ numbers correctly
     def sort_key(mcq):
@@ -358,7 +337,8 @@ def index():
 
     try:
         mcq_index = session.get('mcq_index', 0)  # Get mcq_index from session
-        print(f"In def index - mcq_index: {mcq_index}")
+        print(f"In index - mcq_index: {mcq_index}")
+        logging.debug(f"In index - mcq_index: {mcq_index}")
 
         data = tool.get_question_data(mcq_numbers[mcq_index])
         return render_template('index.html', **data)
@@ -425,6 +405,7 @@ def submit_answer():
 
     mcq_index = session.get('mcq_index', 0)
     print(f"In submit answer (top) - mcq_index: {mcq_index}")
+    logging.debug(f"In submit answer (top) - mcq_index: {mcq_index}")
 
     session['user_choices'].append((mcq_numbers[mcq_index], choice))
     session['total_score'] += int(score)
@@ -453,6 +434,8 @@ def get_next_question():
     try:
         mcq_index = session.get('mcq_index', 0)
         print(f"In get_next_question (top) - mcq_index: {mcq_index}")
+        length_of_list = len(mcq_numbers)
+        logging.debug(f"Length of MCQ list: {length_of_list}")
 
         data = tool.get_question_data(mcq_numbers[mcq_index])
         question_data = {
@@ -674,6 +657,58 @@ def results():
 
 # Define a custom darker pink color
 darker_pink = colors.HexColor('#C2185B')
+
+# Database initialisation (**Matches init_db.py)
+def init_db():
+    logging.info('Running init_db')
+    logging.info(f'sqlite3.version: {sqlite3.version}')
+    conn = sqlite3.connect('assessment_results.db')  # This will create the database file
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT UNIQUE,
+            total_score INTEGER,
+            compliance_percentage REAL,
+            details TEXT,
+            consent TEXT,  
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT,
+            familiarity TEXT,
+            role TEXT,
+            experience TEXT,
+            use_frequently TEXT,
+            complexity TEXT,
+            ease_of_use TEXT,
+            need_support TEXT,
+            integration TEXT,
+            inconsistency TEXT,
+            learn_quickly TEXT,
+            cumbersome TEXT,
+            confidence TEXT,
+            learning_curve TEXT,
+            navigation TEXT,
+            relevance TEXT,
+            comprehensive TEXT,
+            useful_recommendations TEXT,
+            overall_satisfaction TEXT,
+            recommend TEXT,
+            best_feature TEXT,
+            biggest_difficulty TEXT,
+            missing_feature TEXT,
+            additional_comments TEXT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route('/download_report')
 def download_report():
