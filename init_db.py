@@ -32,6 +32,7 @@ def init_db():
             familiarity TEXT,
             role TEXT,
             experience TEXT,
+            location TEXT,
             use_frequently TEXT,
             complexity TEXT,
             ease_of_use TEXT,

@@ -55,9 +55,7 @@ class RegulatoryAssessmentTool:
     def __init__(self):
         logging.debug(f"Running RegulatoryAssessmentTool class")
         endpoint_url = "http://localhost:7200/repositories/NIS2Ontology"
-        
 
- 
         # Initialize SPARQLWrapper with the endpoint URL
         self.sparql = SPARQLWrapper(endpoint_url)
         # Mapping of question labels to scores
@@ -81,8 +79,7 @@ class RegulatoryAssessmentTool:
             return None
 
     def get_answer_definition(self, question_number, answer_label):
-        print("In... get_answer_definition")
-        logging.debug(f"answer_label: {answer_label}")
+        logging.debug("In... get_answer_definition - answer_label: {answer_label}")
         """Fetches the definition of an answer given a question number and answer label."""
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -98,7 +95,6 @@ class RegulatoryAssessmentTool:
         '''
      #   logging.debug(f"Generated SPARQL query for get_answer_definition: {query}")
         results = self.run_sparql_query(query)
-        print("Leaving... get_answer_definition")
         logging.debug("Leaving... get_answer_definition")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['answerDef']['value']
@@ -106,11 +102,10 @@ class RegulatoryAssessmentTool:
             return None
 
     def get_article_info(self, article_label):
-        print("In... get_article_info")
         logging.debug("In... get_article_info")
         length_of_list = len(mcq_numbers)
 
-        logging.debug(f"Length of MCQ list: {length_of_list}")
+        logging.debug(f"Length of MCQ list (get_article_info): {length_of_list}")
       
         """Fetches information about an article given its label."""
         query = f'''
@@ -127,9 +122,8 @@ class RegulatoryAssessmentTool:
             FILTER (LANG(?definition) = "en")
         }}
         '''
-        logging.debug(f"Generated SPARQL query for get_article_info: {query}")
-        print(f"(P) Generated SPARQL query for get_article_info: {query}")
-        logging.debug(f"Length of MCQ list: {length_of_list}")
+        #logging.debug(f"Generated SPARQL query for get_article_info: {query}")
+        #logging.debug(f"Length of MCQ list: {length_of_list}")
         results = self.run_sparql_query(query)
         return results
 
@@ -148,7 +142,6 @@ class RegulatoryAssessmentTool:
     def get_question_data(self, mcq_number):
         """Fetches data for a specific question, including the question text, answers, and related article."""
         logging.debug("In... get_question_data")
-        print("In... get_question_data")
         question_data = self.run_sparql_query(f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         SELECT ?questionLabel ?questionDefinition
@@ -217,7 +210,6 @@ class RegulatoryAssessmentTool:
     def get_recommendation(self, mcq_number):
         """Fetches the recommendation for a given MCQ number."""
         logging.debug("In... get_recommendation")
-        print("In... get_recommendation")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
@@ -233,7 +225,6 @@ class RegulatoryAssessmentTool:
         logging.debug(f"Generated SPARQL query for get_recommendation: {query}")
         results = self.run_sparql_query(query)
         logging.debug("Leaving... get_recommendation")
-        print("Leaving... get_recommendation")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['recommendation']['value']
         else:
@@ -241,7 +232,6 @@ class RegulatoryAssessmentTool:
 
     def get_article_label_for_question(self, mcq_number):
         """Fetches the article label related to a specific MCQ number."""
-        print("In... get_article_label_for_question")
         logging.debug("In... get_article_label_for_question")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -337,10 +327,10 @@ def index():
 
     try:
         mcq_index = session.get('mcq_index', 0)  # Get mcq_index from session
-        print(f"In index - mcq_index: {mcq_index}")
-        logging.debug(f"In index - mcq_index: {mcq_index}")
+        logging.debug(f"In index (1) - mcq_index: {mcq_index} - mcq_numbers: {mcq_numbers}")
 
         data = tool.get_question_data(mcq_numbers[mcq_index])
+        logging.debug(f"In index (2) - mcq_index: {mcq_index} - mcq_numbers: {mcq_numbers}")
         return render_template('index.html', **data)
     except Exception as e:
         logging.error(f"Error in index route: {e}")
@@ -352,7 +342,7 @@ def consent():
     if request.method == 'POST':
         consent = request.form.get('consent')
         user_id = session.get('user_id', os.urandom(16).hex())  # Generate or get user ID
-        print(f"User Id: {user_id}")
+        logging.debug(f"User Id: {user_id}")
         session['user_id'] = user_id
 
         conn = sqlite3.connect('assessment_results.db')
@@ -404,13 +394,13 @@ def submit_answer():
         session['total_score'] = 0
 
     mcq_index = session.get('mcq_index', 0)
-    print(f"In submit answer (top) - mcq_index: {mcq_index}")
     logging.debug(f"In submit answer (top) - mcq_index: {mcq_index}")
 
     session['user_choices'].append((mcq_numbers[mcq_index], choice))
     session['total_score'] += int(score)
 
     if mcq_index >= len(mcq_numbers) - 1:
+        session.modified = True  # Ensure session is marked as modified
         return jsonify({
             'total_score': session['total_score'],
             'user_choices': session['user_choices'],
@@ -420,7 +410,7 @@ def submit_answer():
     mcq_index += 1
     session['mcq_index'] = mcq_index
     session.modified = True  # Ensure session is marked as modified
-    print(f"In submit answer (just after increment) - mcq_index: {mcq_index}")
+    logging.debug(f"In submit answer (just after increment) - mcq_index: {mcq_index}")
 
     return jsonify({
         'total_score': session['total_score'],
@@ -431,11 +421,14 @@ def submit_answer():
 @app.route('/get_next_question')
 def get_next_question():
     """Route to get the next question in the assessment."""
+
     try:
         mcq_index = session.get('mcq_index', 0)
-        print(f"In get_next_question (top) - mcq_index: {mcq_index}")
+        logging.debug(f"In get_next_question - mcq_index: {mcq_index}")
+        total_questions = len(mcq_numbers)
+        questions_completed = mcq_index
         length_of_list = len(mcq_numbers)
-        logging.debug(f"Length of MCQ list: {length_of_list}")
+        logging.debug(f"Length of MCQ list (get_next_question): {length_of_list} - mcq_index: {mcq_index}")
 
         data = tool.get_question_data(mcq_numbers[mcq_index])
         question_data = {
@@ -446,9 +439,11 @@ def get_next_question():
                 'score': data['question']['score']
             },
             'answers': data['answers'],
-            'article_details': data['article_details']
+            'article_details': data['article_details'],
+            'total_questions': total_questions,
+            'questions_completed': questions_completed
         }
-        print(f"In get_next_question (bottom) - mcq_index: {mcq_index}")
+        logging.debug(f"In get_next_question (bottom) - mcq_index: {mcq_index}")
         return jsonify(question_data)
     except Exception as e:
         logging.error(f"Error in get_next_question route: {e}")
@@ -596,7 +591,7 @@ def view_results():
 @app.route('/results')
 def results():
     """Route to display the results of the assessment."""
-    print("In... def results")
+    logging.debug("In... def results")
     if 'user_choices' not in session:
         return redirect(url_for('welcome'))
 
@@ -652,7 +647,7 @@ def results():
 
         grouped_results[status][article_label].append(result)
 
-    print("Leaving... def results")
+    logging.debug("Leaving... def results")
     return render_template('results.html', grouped_results=grouped_results, article_details=article_details)
 
 # Define a custom darker pink color
@@ -682,6 +677,7 @@ def init_db():
             familiarity TEXT,
             role TEXT,
             experience TEXT,
+            location TEXT,
             use_frequently TEXT,
             complexity TEXT,
             ease_of_use TEXT,
@@ -911,6 +907,7 @@ def submit_feedback():
         'familiarity': request.form.get('familiarity'),
         'role': request.form.get('role'),
         'experience': request.form.get('experience'),
+        'location': request.form.get('location'),
         'use_frequently': request.form.get('use_frequently'),
         'complexity': request.form.get('complexity'),
         'ease_of_use': request.form.get('ease_of_use'),
@@ -937,7 +934,7 @@ def submit_feedback():
     c = conn.cursor()
     c.execute('''
         INSERT INTO feedback (
-            user_id, familiarity, role, experience, use_frequently, complexity,
+            user_id, familiarity, role, experience, location, use_frequently, complexity,
             ease_of_use, need_support, integration, inconsistency, learn_quickly,
             cumbersome, confidence, learning_curve, navigation, relevance,
             comprehensive, useful_recommendations, overall_satisfaction,
@@ -945,7 +942,7 @@ def submit_feedback():
             additional_comments
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        user_id, feedback_data['familiarity'], feedback_data['role'], feedback_data['experience'],
+        user_id, feedback_data['familiarity'], feedback_data['role'], feedback_data['experience'], feedback_data['location'],
         feedback_data['use_frequently'], feedback_data['complexity'], feedback_data['ease_of_use'],
         feedback_data['need_support'], feedback_data['integration'], feedback_data['inconsistency'],
         feedback_data['learn_quickly'], feedback_data['cumbersome'], feedback_data['confidence'],
@@ -983,6 +980,61 @@ def view_feedback():
 @app.route('/thank_you')
 def thank_you():
     return render_template('thank_you.html')
+
+@app.route('/stop_assessment')
+def stop_assessment():
+    """Route to stop the assessment and display the results so far."""
+    total_score = session.get('total_score', 0)
+    user_choices = session.get('user_choices', [])
+
+    grouped_results = {'Not Implemented': {}, 'Partially Implemented': {}, 'Fully Implemented': {}}
+    tool = RegulatoryAssessmentTool()
+    label_map = {
+        '(i)': 'Not Implemented',
+        '(ii)': 'Partially Implemented',
+        '(iii)': 'Fully Implemented'
+    }
+
+    article_details = {}
+
+    for question_number, choice in user_choices:
+        answer_def = tool.get_answer_definition(question_number, choice)
+        article_info = tool.get_article_label_for_question(question_number)
+        recommendation = None
+        if choice in ['(i)', '(ii)']:  # Get recommendation only for 'Not Implemented' and 'Partially Implemented'
+            recommendation = tool.get_recommendation(question_number)
+
+        result = {
+            'question_number': question_number,
+            'answerLabel': label_map.get(f"({choice.strip('()')})", 'Unknown Status'),  # Use label_map for the label
+            'answerDef': answer_def,
+            'recommendation': recommendation  # Include the recommendation
+        }
+
+        if article_info:
+            article_label = article_info['articleLabel']
+            result['articleLabel'] = article_label
+            result['articleDefinition'] = article_info['definition']
+            # Add article details to the dictionary
+            if article_label not in article_details:
+                article_details[article_label] = article_info['definition']
+
+        status = result['answerLabel']  # Use the full description
+
+        if status not in grouped_results:
+            grouped_results[status] = {}
+
+        if article_label not in grouped_results[status]:
+            grouped_results[status][article_label] = []
+
+        grouped_results[status][article_label].append(result)
+
+    session['grouped_results'] = grouped_results
+    session['article_details'] = article_details
+    session['total_score'] = total_score
+  #  session.modified = True  # Ensure session is marked as modified - Issue this removed the button to stop the assessment
+
+    return redirect(url_for('complete'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -9,12 +9,13 @@ def clear_db():
 
     # Recreate the feedback table with the correct schema
     c.execute('''
-        CREATE TABLE feedback (
+        CREATE TABLE IF NOT EXISTS feedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id TEXT,
             familiarity TEXT,
             role TEXT,
             experience TEXT,
+            location TEXT,
             use_frequently TEXT,
             complexity TEXT,
             ease_of_use TEXT,
