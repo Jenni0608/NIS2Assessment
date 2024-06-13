@@ -16,6 +16,9 @@
 
     <div class="results-container">
         <!-- Header section -->
+         <div class="feedback-button-container">
+            <a href="{{ url_for('feedback') }}" class="feedback-button">User Feedback Form</a>
+        </div>
         <!-- Loop through each implementation status (e.g., Not Implemented, Partially Implemented, Fully Implemented) -->
         {% for implementation_status, articles in grouped_results.items() %}
             <div class="implementation-group">
@@ -53,7 +56,6 @@
         <div class="button-container">
             <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
             <a href="{{ url_for('download_report') }}" class="pink-button">Download Report</a>
-            <a href="{{ url_for('feedback') }}" class="pink-button">User Feedback Form</a>
         </div>
     </div>
 </body>

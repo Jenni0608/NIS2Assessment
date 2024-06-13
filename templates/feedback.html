@@ -21,20 +21,39 @@
 
                     <label for="familiarity">1. How would you rate your familiarity with NIS2 Directive and ISO 270001 controls?</label>
                     <select id="familiarity" name="familiarity">
-                        <option value="not_familiar">Not familiar</option>
-                        <option value="somewhat_familiar">Somewhat familiar</option>
-                        <option value="familiar">Familiar</option>
-                        <option value="very_familiar">Very familiar</option>
+                        <option value="not_familiar">Not familiar (No knowledge or experience)</option>
+                        <option value="heard_of_it">Heard of it (Aware but no hands-on experience)</option>
+                        <option value="basic_knowledge">Basic knowledge (Understand the basics and have some theoretical knowledge)</option>
+                        <option value="intermediate_knowledge">Intermediate knowledge (Some practical experience and working understanding)</option>
+                        <option value="advanced_knowledge">Advanced knowledge (Work professionally with NIS2 and ISO 270001 controls)</option>
+                        <option value="expert_knowledge">Expert knowledge (Deep expertise and extensive professional experience)</option>
                     </select>
 
                     <label for="role">2. What is your role within your organisation?</label>
                     <select id="role" name="role">
-                        <option value="it_security_professional">IT Security Professional</option>
+                        <option value="ciso">Chief Information Security Officer (CISO)</option>
                         <option value="compliance_officer">Compliance Officer</option>
-                        <option value="it_manager">IT Manager</option>
-                        <option value="risk_manager">Risk Manager</option>
                         <option value="consultant">Consultant</option>
-                        <option value="other">Other (please specify)</option>
+                        <option value="consultant">Cyber Security Professional</option>
+                        <option value="data_protection_officer">Data Protection Officer (DPO)</option>
+                        <option value="devops_engineer">DevOps Engineer</option>
+                        <option value="executive">Executive (C-Level)</option>
+                        <option value="human_resources">Human Resources</option>
+                        <option value="incident_response_manager">Incident Response Manager</option>
+                        <option value="it_auditor">IT Auditor</option>
+                        <option value="it_manager">IT Manager</option>
+                        <option value="it_security_professional">IT Security Professional</option>
+                        <option value="legal_counsel">Legal Counsel</option>
+                        <option value="network_administrator">Network Administrator</option>
+                        <option value="penetration_tester">Penetration Tester</option>
+                        <option value="project_manager">Project Manager</option>
+                        <option value="risk_manager">Risk Manager</option>
+                        <option value="security_analyst">Security Analyst</option>
+                        <option value="security_engineer">Security Engineer</option>
+                        <option value="software_developer">Software Developer</option>
+                        <option value="system_administrator">System Administrator</option>
+                        <option value="training_coordinator">Training and Awareness Coordinator</option>
+                        <option value="other">Other</option>
                     </select>
 
                     <label for="experience">3. How many years experience do you have in IT?</label>
@@ -44,6 +63,15 @@
                         <option value="11_15">11 - 15</option>
                         <option value="15_20">15 - 20</option>
                         <option value="21_plus">21+</option>
+                    </select>
+
+                    <label for="location">4. What location are you in?</label>
+                    <select id="location" name="location">
+                        <option value="Ireland">Ireland</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Nordics">Nordics</option>
+                        <option value="UK">UK</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
             </div>
@@ -155,7 +183,7 @@
                 <div class="feedback-section">
                     <h2>Content and Relevance</h2>
 
-                    <label>1. How relevant were the multiple-choice questions to your organization's operations and security measures?</label>
+                    <label>1. How relevant were the multiple-choice questions to your organisation's operations and security measures?</label>
                     <div class="radio-group">
                         <div><label><input type="radio" name="relevance" value="Very relevant" required> Very relevant</label></div>
                         <div><label><input type="radio" name="relevance" value="Relevant"> Relevant</label></div>
@@ -182,19 +210,18 @@
                         <div><label><input type="radio" name="useful_recommendations" value="Very not useful"> Very not useful</label></div>
                     </div>
 
-                    <label>4. Overall, how satisfied are you with the NIS2 Regulatory Assessment Tool?</label>
-                    <div class="radio-group">
-                        <div><label><input type="radio" name="overall_satisfaction" value="Very satisfied" required> Very satisfied</label></div>
-                        <div><label><input type="radio" name="overall_satisfaction" value="Satisfied"> Satisfied</label></div>
-                        <div><label><input type="radio" name="overall_satisfaction" value="Neutral"> Neutral</label></div>
-                        <div><label><input type="radio" name="overall_satisfaction" value="Unsatisfied"> Unsatisfied</label></div>
-                        <div><label><input type="radio" name="overall_satisfaction" value="Very unsatisfied"> Very unsatisfied</label></div>
-                    </div>
-
-                    <label>5. Would you recommend this tool to others in your field?</label>
-                    <div class="radio-group">
-                        <div><label><input type="radio" name="recommend" value="Yes" required> Yes</label></div>
-                        <div><label><input type="radio" name="recommend" value="No"> No</label></div>
+                    <label>4. On a scale of 0-10, how likely is it that you would recommend the NIS2 Regulatory Assessment Tool to your friends, family, or business associates?</label>
+                    <div class="radio-group" id="recommend">
+                        <div><label><input type="radio" name="recommend" value="1" required> 1</label></div>
+                        <div><label><input type="radio" name="recommend" value="2"> 2</label></div>
+                        <div><label><input type="radio" name="recommend" value="3"> 3</label></div>
+                        <div><label><input type="radio" name="recommend" value="4"> 4</label></div>
+                        <div><label><input type="radio" name="recommend" value="5"> 5</label></div>
+                        <div><label><input type="radio" name="recommend" value="6"> 6</label></div>
+                        <div><label><input type="radio" name="recommend" value="7"> 7</label></div>
+                        <div><label><input type="radio" name="recommend" value="8"> 8</label></div>
+                        <div><label><input type="radio" name="recommend" value="9"> 9</label></div>
+                        <div><label><input type="radio" name="recommend" value="10"> 10</label></div>
                     </div>
                 </div>
             </div>
@@ -215,8 +242,9 @@
                     <textarea name="additional_comments" id="additional_comments" rows="3"></textarea>
                 </div>
             </div>
-            <button type="submit" class="pink-button">Submit Feedback</button>
-            <a href="{{ url_for('welcome') }}" class="pink-button">Back to Home</a>
+            <div id="progressContainer" class="process-container">
+                <button type="submit" class="pink-button-big">Submit Feedback</button>
+            </div>
         </form>
     </div>
 </body>
