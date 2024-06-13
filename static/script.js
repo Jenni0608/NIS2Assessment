@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const articleInfoContainer = document.getElementById('articleInfoContainer');
     const questionBox = document.getElementById('questionBox');
     const totalScoreElement = document.getElementById('totalScore');
+    const progressText = document.getElementById('progressText');
+
+    let totalQuestions = 0;
+    let questionsCompleted = 0;
 
     // Function to handle the submission of an answer
     function handleSubmit() {
@@ -44,6 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             // Update the total score displayed on the page
             totalScoreElement.textContent = data.total_score;
+             // Ensure questionsCompleted never exceeds totalQuestions
+            if (questionsCompleted < totalQuestions) {
+                questionsCompleted += 1;
+            }
+            updateProgressDisplay();
 
             // Check if the quiz is completed
             if (data.completed) {
@@ -53,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Load the next question
                 loadNextQuestion();
             }
+
         })
         .catch(error => {
             console.error('Error submitting answer:', error);
@@ -73,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update the UI with the new question and article info
             updateQuestionUI(data);
             updateArticleInfo(data.article_details);
+            totalQuestions = data.total_questions;
+            questionsCompleted = data.questions_completed;
+            updateProgressDisplay();
         })
         .catch(error => {
             console.error('Error loading next question:', error);
@@ -115,6 +128,22 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
+
+    // Function to show progress
+    function updateProgressDisplay() {
+        progressText.textContent = `Question ${questionsCompleted + 1} of ${totalQuestions}`;
+    }
+
+    // Function to show a confirmation dialog before stopping the assessment
+    function confirmStopAssessment() {
+        if (confirm("Are you sure you want to stop the assessment? This action cannot be undone.")) {
+            window.location.href = '/stop_assessment';
+        }
+    }
+
+    // Attach the confirmStopAssessment function to the stop button
+    const stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener('click', confirmStopAssessment);
 
     // Attach event listener to the submit button and load the first question
     attachSubmitButtonListener();

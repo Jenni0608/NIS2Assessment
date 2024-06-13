@@ -150,6 +150,30 @@ p, .question-text {
     justify-content: center;
     margin-top: 20px;
 }
+/* Button container styling for alignment */
+.process-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+/* Button container styling for alignment */
+.feedback-button-container {
+    display: flex;
+    justify-content: right;
+    margin-top: 5px;
+}
+/* Pink button styling */
+.feedback-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #a000f3;
+    color: white;
+    border-radius: 5px;
+	margin: 10px;
+    transition: background-color 0.3s ease;
+}
 
 /* Pink button styling */
 .pink-button {
@@ -158,6 +182,18 @@ p, .question-text {
     cursor: pointer;
     border: none;
     background-color: #ff4081;
+    color: white;
+    border-radius: 5px;
+	margin: 10px;
+    transition: background-color 0.3s ease;
+}
+/* Grey button styling */
+.grey-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #a6a6a6;
     color: white;
     border-radius: 5px;
 	margin: 10px;
@@ -501,6 +537,12 @@ p, .question-text {
 .score {
     color: #ff4081;
     font-size: 1.5em;
+}
+
+/* Pink text styling */
+.pink-text {
+    color: #a000f3;
+    font-size: 1.2em;
 }
 
 /* Compliance image container styling */
