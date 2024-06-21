@@ -1,13 +1,8 @@
-# NIS2Assessment
-Regulatory assessment tool, developed with python. It utilises a unified knowledge model (ontology - stored in GraphDB)  to measure compliance with NIS2 Cybersecurity risk-management measures (Article 21).
-
-NIS2 Regulatory Assessment Tool: Development Documentation 
-
-# Overview of the Regulatory Assessment Tool
-The Regulatory Assessment Tool is designed to measure compliance with NIS2 Cybersecurity risk-management measures (Article 21). The tool utilises a unified knowledge model (ontology stored in GraphDB) to dynamically call multiple choice questions (MCQs) and assess compliance with the NIS2 directive.
+# Overview of the NIS2 Regulatory Assessment Tool
+The Regulatory Assessment Tool, developed in Python, leverages a unified knowledge model (ontology stored in GraphDB) to evaluate compliance with the NIS2 Cybersecurity risk-management measures outlined in Article 21. The tool dynamically retrieves multiple-choice questions (MCQs) from the ontology stored in GraphDB, facilitating a comprehensive evaluation of compliance with the NIS2 directive.
 
 # Purpose and Scope
-The purpose of this tool is to provide organisations with a means to conduct a comprehensive NIS2 gap analysis against the ISO 27001:2022 framework. It maps specific ISO 27001:2022 controls and the essential security controls outlined by ENISA against the ten NIS2 Cybersecurity risk-management measures as detailed in Article 21.
+The primary objective of this tool is to enable organisations to conduct an in-depth NIS2 gap analysis using the ISO 27001:2022 framework as a benchmark. The tool systematically maps specific ISO 27001:2022 controls and the essential security controls recommended by the European Union Agency for Cybersecurity (ENISA) against the ten NIS2 Cybersecurity risk-management measures detailed in Article 21. This mapping ensures a thorough and standardised approach to assessing and enhancing cybersecurity compliance.
 
 # Installation
 System Requirements
