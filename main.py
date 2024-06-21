@@ -53,7 +53,6 @@ app.secret_key = secret_key
 # Class to handle regulatory assessment tool logic
 class RegulatoryAssessmentTool:
     def __init__(self):
-        logging.debug(f"Running RegulatoryAssessmentTool class")
         endpoint_url = "http://localhost:7200/repositories/NIS2Ontology"
 
         # Initialize SPARQLWrapper with the endpoint URL
@@ -67,19 +66,16 @@ class RegulatoryAssessmentTool:
 
     def run_sparql_query(self, query):
         """Runs a SPARQL query and returns the results in JSON format."""
-        logging.debug(f"Running SPARQL query: {query}")
         self.sparql.setQuery(query)
         self.sparql.setReturnFormat(JSON)
         try:
             results = self.sparql.query().convert()
-            logging.debug(f"SPARQL query results: {results}")
             return results
         except (urllib.error.URLError, urllib.error.HTTPError) as e:
             logging.error(f"Error running SPARQL query: {e}")
             return None
 
     def get_answer_definition(self, question_number, answer_label):
-        logging.debug("In... get_answer_definition - answer_label: {answer_label}")
         """Fetches the definition of an answer given a question number and answer label."""
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -93,20 +89,13 @@ class RegulatoryAssessmentTool:
           FILTER (str(?answerLabel) = '{answer_label}')
         }}
         '''
-     #   logging.debug(f"Generated SPARQL query for get_answer_definition: {query}")
         results = self.run_sparql_query(query)
-        logging.debug("Leaving... get_answer_definition")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['answerDef']['value']
         else:
             return None
 
-    def get_article_info(self, article_label):
-        logging.debug("In... get_article_info")
-        length_of_list = len(mcq_numbers)
-
-        logging.debug(f"Length of MCQ list (get_article_info): {length_of_list}")
-      
+    def get_article_info(self, article_label):      
         """Fetches information about an article given its label."""
         query = f'''
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -122,8 +111,7 @@ class RegulatoryAssessmentTool:
             FILTER (LANG(?definition) = "en")
         }}
         '''
-        #logging.debug(f"Generated SPARQL query for get_article_info: {query}")
-        #logging.debug(f"Length of MCQ list: {length_of_list}")
+        
         results = self.run_sparql_query(query)
         return results
 
@@ -141,7 +129,6 @@ class RegulatoryAssessmentTool:
 
     def get_question_data(self, mcq_number):
         """Fetches data for a specific question, including the question text, answers, and related article."""
-        logging.debug("In... get_question_data")
         question_data = self.run_sparql_query(f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         SELECT ?questionLabel ?questionDefinition
@@ -209,7 +196,6 @@ class RegulatoryAssessmentTool:
 
     def get_recommendation(self, mcq_number):
         """Fetches the recommendation for a given MCQ number."""
-        logging.debug("In... get_recommendation")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
@@ -222,9 +208,7 @@ class RegulatoryAssessmentTool:
           ?control skos:definition ?recommendation .
         }}
         '''
-        logging.debug(f"Generated SPARQL query for get_recommendation: {query}")
         results = self.run_sparql_query(query)
-        logging.debug("Leaving... get_recommendation")
         if results['results']['bindings']:
             return results['results']['bindings'][0]['recommendation']['value']
         else:
@@ -232,7 +216,6 @@ class RegulatoryAssessmentTool:
 
     def get_article_label_for_question(self, mcq_number):
         """Fetches the article label related to a specific MCQ number."""
-        logging.debug("In... get_article_label_for_question")
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
@@ -245,9 +228,8 @@ class RegulatoryAssessmentTool:
                    skos:definition ?definition .
         }}
         '''
-        logging.debug(f"mcq_number: {mcq_number}")
+        
         results = self.run_sparql_query(query)
-        logging.debug(f"SPARQL query results for get_article_label_for_question: {results}")
 
         if results['results']['bindings']:
             binding = results['results']['bindings'][0]
@@ -277,24 +259,19 @@ def fetch_mcq_numbers():
         FILTER(STRSTARTS(?label, "MCQ"))
     }
     '''
-    logging.debug(f"Generated SPARQL query for fetch_mcq_numbers: {query}")
     results = tool.run_sparql_query(query)
 
     # Extract the MCQ numbers correctly using regex
     mcq_numbers = []
     for result in results['results']['bindings']:
         uri = result['class']['value']
-        logging.debug(f'Processing URI: {uri}')
         mcq_number_match = re.search(r'MCQ\.(\d+(\.\d+)?)$', uri)
         if mcq_number_match:
             mcq_number = mcq_number_match.group(1)
             mcq_numbers.append(mcq_number)
-            logging.debug(f"Added MCQ number: {mcq_number}")
             length_of_list = len(mcq_numbers)
-            logging.debug(f"Length of MCQ list: {length_of_list}")
         else:
             logging.warning(f'No match for URI: {uri}')
-    logging.debug(f'Current MCQ numbers before sorting: {mcq_numbers}')
 
     # Sort the MCQ numbers correctly
     def sort_key(mcq):
@@ -303,7 +280,6 @@ def fetch_mcq_numbers():
 
     mcq_numbers.sort(key=sort_key)
 
-    logging.debug(f"Sorted MCQ numbers: {mcq_numbers}")
     return mcq_numbers
 
 # Initialize the list of MCQ numbers
@@ -327,10 +303,7 @@ def index():
 
     try:
         mcq_index = session.get('mcq_index', 0)  # Get mcq_index from session
-        logging.debug(f"In index (1) - mcq_index: {mcq_index} - mcq_numbers: {mcq_numbers}")
-
         data = tool.get_question_data(mcq_numbers[mcq_index])
-        logging.debug(f"In index (2) - mcq_index: {mcq_index} - mcq_numbers: {mcq_numbers}")
         return render_template('index.html', **data)
     except Exception as e:
         logging.error(f"Error in index route: {e}")
@@ -342,7 +315,6 @@ def consent():
     if request.method == 'POST':
         consent = request.form.get('consent')
         user_id = session.get('user_id', os.urandom(16).hex())  # Generate or get user ID
-        logging.debug(f"User Id: {user_id}")
         session['user_id'] = user_id
 
         conn = sqlite3.connect('assessment_results.db')
@@ -394,8 +366,6 @@ def submit_answer():
         session['total_score'] = 0
 
     mcq_index = session.get('mcq_index', 0)
-    logging.debug(f"In submit answer (top) - mcq_index: {mcq_index}")
-
     session['user_choices'].append((mcq_numbers[mcq_index], choice))
     session['total_score'] += int(score)
 
@@ -410,7 +380,6 @@ def submit_answer():
     mcq_index += 1
     session['mcq_index'] = mcq_index
     session.modified = True  # Ensure session is marked as modified
-    logging.debug(f"In submit answer (just after increment) - mcq_index: {mcq_index}")
 
     return jsonify({
         'total_score': session['total_score'],
@@ -424,11 +393,9 @@ def get_next_question():
 
     try:
         mcq_index = session.get('mcq_index', 0)
-        logging.debug(f"In get_next_question - mcq_index: {mcq_index}")
         total_questions = len(mcq_numbers)
         questions_completed = mcq_index
         length_of_list = len(mcq_numbers)
-        logging.debug(f"Length of MCQ list (get_next_question): {length_of_list} - mcq_index: {mcq_index}")
 
         data = tool.get_question_data(mcq_numbers[mcq_index])
         question_data = {
@@ -443,7 +410,6 @@ def get_next_question():
             'total_questions': total_questions,
             'questions_completed': questions_completed
         }
-        logging.debug(f"In get_next_question (bottom) - mcq_index: {mcq_index}")
         return jsonify(question_data)
     except Exception as e:
         logging.error(f"Error in get_next_question route: {e}")
@@ -543,8 +509,6 @@ def complete():
     overall_labels = ['Not Implemented', 'Partially Implemented', 'Fully Implemented']
     overall_counts_list = [overall_counts[label] for label in overall_labels]
 
-    logging.debug(f"overall_counts: {overall_counts_list}")
-
     plt.figure(figsize=(10, 5))
     bars = plt.bar(overall_labels, overall_counts_list, color='#cf73ff')
     plt.ylabel('Total Scores', fontsize=16)
@@ -591,7 +555,6 @@ def view_results():
 @app.route('/results')
 def results():
     """Route to display the results of the assessment."""
-    logging.debug("In... def results")
     if 'user_choices' not in session:
         return redirect(url_for('welcome'))
 
@@ -647,7 +610,6 @@ def results():
 
         grouped_results[status][article_label].append(result)
 
-    logging.debug("Leaving... def results")
     return render_template('results.html', grouped_results=grouped_results, article_details=article_details)
 
 # Define a custom darker pink color
