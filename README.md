@@ -3,14 +3,13 @@ Regulatory assessment tool, developed with python. It utilises a unified knowled
 
 NIS2 Regulatory Assessment Tool: Development Documentation 
 
-Introduction
-Overview of the Regulatory Assessment Tool
+Overview of the Regulatory Assessment Tool: 
 The Regulatory Assessment Tool is designed to measure compliance with NIS2 Cybersecurity risk-management measures (Article 21). The tool utilises a unified knowledge model (ontology stored in GraphDB) to dynamically call multiple choice questions (MCQs) and assess compliance with the NIS2 directive.
 
-Purpose and Scope
+Purpose and Scope: 
 The purpose of this tool is to provide organisations with a means to conduct a comprehensive NIS2 gap analysis against the ISO 27001:2022 framework. It maps specific ISO 27001:2022 controls and the essential security controls outlined by ENISA against the ten NIS2 Cybersecurity risk-management measures as detailed in Article 21.
 
-Installation
+Installation: 
 System Requirements
 •	Python 3.7 or higher
 •	Flask
@@ -21,7 +20,7 @@ System Requirements
 •	Flask-Session
 •	A running instance of GraphDB
 
-Installation Steps
+Installation Steps: 
 1. Clone the repository:
     git clone <repository-url>
     cd <repository-directory>
@@ -34,7 +33,7 @@ Installation Steps
 3. Install the required packages:
     pip install -r requirements.txt
 
-Configuration
+Configuration: 
 Setting up the SPARQL Endpoint
 Ensure that the GraphDB instance is running and accessible. Update the SPARQL endpoint URL in the `RegulatoryAssessmentTool` class within `main.py`:
 self.sparql = SPARQLWrapper("http://localhost:8080/repositories/NIS2Ontology")
@@ -46,28 +45,28 @@ app = Flask(__name__, static_url_path='/static')
 app.secret_key = secret_key
 
 
-Usage
+Usage: 
 Starting the Application
 Run the Flask application:
 flask run
 Access the application in the web browser at `http://127.0.0.1:5000`.
 
-Navigating the Welcome Page
+Navigating the Welcome Page: 
 The welcome page introduces the tool and provides an overview of NIS2 requirements. Click "Begin Assessment" to start the compliance assessment.
 
-Conducting an Assessment
+Conducting an Assessment: 
 Answer the multiple-choice questions presented. Each question is dynamically fetched from the ontology.
 
-Viewing Results
+Viewing Results: 
 After completing the assessment, view detailed results categorized by implementation status and article. Recommendations are provided for partial or non-implemented measures.
 
-Generating Reports
+Generating Reports: 
 Click "Download Report" on the results page to generate a PDF report of the assessment, including scores, compliance percentage, and recommendations.
 
-User Feedback
+User Feedback: 
 Users can provide feedback through a feedback form available after the assessment. The feedback form includes questions on usability, content relevance, and overall satisfaction.
 
-Code Overview
+Code Overview: 
 main.py: Explanation of the Main Application File
 Class: RegulatoryAssessmentTool
 `__init__`: Initializes the SPARQL endpoint and question label scores.
