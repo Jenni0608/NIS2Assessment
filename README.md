@@ -3,13 +3,13 @@ Regulatory assessment tool, developed with python. It utilises a unified knowled
 
 NIS2 Regulatory Assessment Tool: Development Documentation 
 
-# Overview of the Regulatory Assessment Tool: 
+# Overview of the Regulatory Assessment Tool
 The Regulatory Assessment Tool is designed to measure compliance with NIS2 Cybersecurity risk-management measures (Article 21). The tool utilises a unified knowledge model (ontology stored in GraphDB) to dynamically call multiple choice questions (MCQs) and assess compliance with the NIS2 directive.
 
-# Purpose and Scope: 
+# Purpose and Scope
 The purpose of this tool is to provide organisations with a means to conduct a comprehensive NIS2 gap analysis against the ISO 27001:2022 framework. It maps specific ISO 27001:2022 controls and the essential security controls outlined by ENISA against the ten NIS2 Cybersecurity risk-management measures as detailed in Article 21.
 
-# Installation: 
+# Installation
 System Requirements
 •	Python 3.7 or higher
 •	Flask
