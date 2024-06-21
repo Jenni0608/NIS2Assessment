@@ -110,7 +110,7 @@ Common Issues and Solutions
 SPARQL Query Errors: Ensure the SPARQL queries are correctly formatted and the endpoint is accessible.
 Flask Application Errors: Check for missing or misconfigured routes and templates.
 
-# Logging and Debugging
+Logging and Debugging: 
 Enable logging in `main.py`:
 logging.basicConfig(level=logging.DEBUG)
 Check the console output for detailed logs.
