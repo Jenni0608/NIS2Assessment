@@ -109,17 +109,17 @@ Add new methods in the `RegulatoryAssessmentTool` class to handle additional SPA
 Customizing the Report Layout
 Modify the `download_report` route in `main.py` to change the layout, styles, and content of the PDF report.
 
-Troubleshooting
+# Troubleshooting
 
 Common Issues and Solutions
 SPARQL Query Errors: Ensure the SPARQL queries are correctly formatted and the endpoint is accessible.
 Flask Application Errors: Check for missing or misconfigured routes and templates.
 
-Logging and Debugging
+# Logging and Debugging
 Enable logging in `main.py`:
 logging.basicConfig(level=logging.DEBUG)
 Check the console output for detailed logs.
 
 
-Contact
+# Contact
 For support or to contribute to this project, contact Jenni Parry at jenni.parry@ucdconnect.ie.
