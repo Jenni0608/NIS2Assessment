@@ -1,34 +1,46 @@
 # Overview of the NIS2 Regulatory Assessment Tool
+
 The Regulatory Assessment Tool, developed in Python, leverages a unified knowledge model (ontology stored in GraphDB) to evaluate compliance with the NIS2 Cybersecurity risk-management measures outlined in Article 21. The tool dynamically retrieves multiple-choice questions (MCQs) from the ontology stored in GraphDB, facilitating a comprehensive evaluation of compliance with the NIS2 directive.
 
 # Purpose and Scope
+
 The primary objective of this tool is to enable organisations to conduct an in-depth NIS2 gap analysis using the ISO 27001:2022 framework as a benchmark. The tool systematically maps specific ISO 27001:2022 controls and the essential security controls recommended by the European Union Agency for Cybersecurity (ENISA) against the ten NIS2 Cybersecurity risk-management measures detailed in Article 21. This mapping ensures a thorough and standardised approach to assessing and enhancing cybersecurity compliance.
 
 # Installation
-System Requirements
-•	Python 3.7 or higher
-•	Flask
-•	SPARQLWrapper
-•	ReportLab
-•	Matplotlib
-•	SQLite3
-•	Flask-Session
-•	A running instance of GraphDB
 
-Installation Steps: 
+System Requirements
+• Python 3.7 or higher
+• Flask
+• SPARQLWrapper
+• ReportLab
+• Matplotlib
+• SQLite3
+• Flask-Session
+• A running instance of GraphDB
+
+Installation Steps:
+
 1. Clone the repository:
-    git clone <repository-url>
-    cd <repository-directory>
+
+- git clone https://github.com/Jenni0608/NIS2Assessment.git
+- cd NIS2Addessment
 
 2. Create a virtual environment:
-    python -m venv venv
-    source venv/bin/activate  
-* On Windows: venv\Scripts\activate
+
+- python -m venv venv
+- source venv/bin/activate
+
+- On Windows: venv\Scripts\activate
 
 3. Install the required packages:
-    pip install -r requirements.txt
 
-Configuration: 
+- pip install -r requirements.txt
+
+4. Run the application in the dev mode:
+
+- flask --app main run
+
+Configuration:
 Setting up the SPARQL Endpoint
 Ensure that the GraphDB instance is running and accessible. Update the SPARQL endpoint URL in the `RegulatoryAssessmentTool` class within `main.py`:
 self.sparql = SPARQLWrapper("http://localhost:8080/repositories/NIS2Ontology")
@@ -36,32 +48,31 @@ self.sparql = SPARQLWrapper("http://localhost:8080/repositories/NIS2Ontology")
 Configuring the Flask Application
 Ensure Flask is set up correctly by configuring the secret key:
 secret_key = binascii.hexlify(os.urandom(24)).decode()
-app = Flask(__name__, static_url_path='/static')
+app = Flask(**name**, static_url_path='/static')
 app.secret_key = secret_key
 
-
-Usage: 
+Usage:
 Starting the Application
 Run the Flask application:
 flask run
 Access the application in the web browser at `http://127.0.0.1:5000`.
 
-Navigating the Welcome Page: 
+Navigating the Welcome Page:
 The welcome page introduces the tool and provides an overview of NIS2 requirements. Click "Begin Assessment" to start the compliance assessment.
 
-Conducting an Assessment: 
+Conducting an Assessment:
 Answer the multiple-choice questions presented. Each question is dynamically fetched from the ontology.
 
-Viewing Results: 
+Viewing Results:
 After completing the assessment, view detailed results categorized by implementation status and article. Recommendations are provided for partial or non-implemented measures.
 
-Generating Reports: 
+Generating Reports:
 Click "Download Report" on the results page to generate a PDF report of the assessment, including scores, compliance percentage, and recommendations.
 
-User Feedback: 
+User Feedback:
 Users can provide feedback through a feedback form available after the assessment. The feedback form includes questions on usability, content relevance, and overall satisfaction.
 
-Code Overview: 
+Code Overview:
 main.py: Explanation of the Main Application File
 Class: RegulatoryAssessmentTool
 `__init__`: Initializes the SPARQL endpoint and question label scores.
@@ -104,17 +115,24 @@ Add new methods in the `RegulatoryAssessmentTool` class to handle additional SPA
 Customizing the Report Layout
 Modify the `download_report` route in `main.py` to change the layout, styles, and content of the PDF report.
 
+# Application Deployment
+
+- The app can be deployed using `gunicorn`. The defautl configuration file can be found [here](/gunicorn_config.py).
+- Generate a secret key for Session. Make sure you are in env and run: `python -c 'import secrets; print(secrets.token_hex())'`
+- Update the secret_key variable in the main.py.
+- Rn the app in production mode: `gunicorn --config gunicorn_config.py main:app`
+
 # Troubleshooting
 
 Common Issues and Solutions
 SPARQL Query Errors: Ensure the SPARQL queries are correctly formatted and the endpoint is accessible.
 Flask Application Errors: Check for missing or misconfigured routes and templates.
 
-Logging and Debugging: 
+Logging and Debugging:
 Enable logging in `main.py`:
 logging.basicConfig(level=logging.DEBUG)
 Check the console output for detailed logs.
 
-
 # Contact
+
 For support or to contribute to this project, contact Jenni Parry at jenni.parry@ucdconnect.ie.
