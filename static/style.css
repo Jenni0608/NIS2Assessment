@@ -829,6 +829,16 @@ ul {
 	color: #e91e63;
 }
 
+.adapt-image-container {
+    width: 100%;
+    text-align: center; /* This aligns the image to the right */
+}
+
+.adapt-image-container img {
+    width: 250px; /* Adjust this value to your desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 2px;
+}
 .form-section {
 	background-color: #ffe4e9;
 	padding: 20px;
