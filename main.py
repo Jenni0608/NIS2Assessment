@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.DEBUG, format=log_format)
 logger = logging.getLogger()
 
 # File handler
-file_handler = logging.FileHandler('/home/jenni/nis2/nis2Env/logs/application.log')
+file_handler = logging.FileHandler('./application.log')
 file_handler.setFormatter(logging.Formatter(log_format))
 logger.addHandler(file_handler)
 
