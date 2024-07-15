@@ -80,7 +80,7 @@ class RegulatoryAssessmentTool:
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX assess: <http://JP_ontology.org/assessment/>
-        
+
         SELECT ?answerDef
         WHERE {{
           ?answer rdf:type assess:MCQ.{question_number} ;
@@ -95,7 +95,7 @@ class RegulatoryAssessmentTool:
         else:
             return None
 
-    def get_article_info(self, article_label):      
+    def get_article_info(self, article_label):
         """Fetches information about an article given its label."""
         query = f'''
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -111,7 +111,7 @@ class RegulatoryAssessmentTool:
             FILTER (LANG(?definition) = "en")
         }}
         '''
-        
+
         results = self.run_sparql_query(query)
         return results
 
@@ -200,7 +200,7 @@ class RegulatoryAssessmentTool:
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
         PREFIX nis2v: <http://JP_ontology.org/nis2v#>
-        
+
         SELECT ?control ?recommendation
         WHERE {{
           ?question skos:altLabel "MCQ.{mcq_number}"@en ;
@@ -219,7 +219,7 @@ class RegulatoryAssessmentTool:
         query = f'''
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
         PREFIX dct: <http://purl.org/dc/terms/>
-        
+
         SELECT ?articleLabel ?definition
         WHERE {{
           ?question skos:altLabel "MCQ.{mcq_number}"@en ;
@@ -228,7 +228,7 @@ class RegulatoryAssessmentTool:
                    skos:definition ?definition .
         }}
         '''
-        
+
         results = self.run_sparql_query(query)
 
         if results['results']['bindings']:
@@ -530,7 +530,7 @@ def complete():
     details = json.dumps(grouped_choices)
     conn = sqlite3.connect('assessment_results.db')
     c = conn.cursor()
-    c.execute('''UPDATE results SET total_score=?, compliance_percentage=?, details=? 
+    c.execute('''UPDATE results SET total_score=?, compliance_percentage=?, details=?
                  WHERE user_id=?''', (total_score, compliance_percentage, details, user_id))
     conn.commit()
     conn.close()
@@ -628,7 +628,7 @@ def init_db():
             total_score INTEGER,
             compliance_percentage REAL,
             details TEXT,
-            consent TEXT,  
+            consent TEXT,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -864,8 +864,8 @@ def feedback():
 
 @app.route('/submit_feedback', methods=['POST'])
 def submit_feedback():
-    user_id = request.form.get('user_id')
     feedback_data = {
+        'user_id': request.form.get('user_id'),
         'familiarity': request.form.get('familiarity'),
         'role': request.form.get('role'),
         'experience': request.form.get('experience'),
@@ -884,7 +884,7 @@ def submit_feedback():
         'relevance': request.form.get('relevance'),
         'comprehensive': request.form.get('comprehensive'),
         'useful_recommendations': request.form.get('useful_recommendations'),
-        'overall_satisfaction': request.form.get('overall_satisfaction'),
+        'overall_satisfaction': request.form.get('overall_satisfaction', "Not specified"),
         'recommend': request.form.get('recommend'),
         'best_feature': request.form.get('best_feature'),
         'biggest_difficulty': request.form.get('biggest_difficulty'),
@@ -894,27 +894,13 @@ def submit_feedback():
 
     conn = sqlite3.connect('assessment_results.db')
     c = conn.cursor()
-    c.execute('''
-        INSERT INTO feedback (
-            user_id, familiarity, role, experience, location, use_frequently, complexity,
-            ease_of_use, need_support, integration, inconsistency, learn_quickly,
-            cumbersome, confidence, learning_curve, navigation, relevance,
-            comprehensive, useful_recommendations, overall_satisfaction,
-            recommend, best_feature, biggest_difficulty, missing_feature,
-            additional_comments
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (
-        user_id, feedback_data['familiarity'], feedback_data['role'], feedback_data['experience'], feedback_data['location'],
-        feedback_data['use_frequently'], feedback_data['complexity'], feedback_data['ease_of_use'],
-        feedback_data['need_support'], feedback_data['integration'], feedback_data['inconsistency'],
-        feedback_data['learn_quickly'], feedback_data['cumbersome'], feedback_data['confidence'],
-        feedback_data['learning_curve'], feedback_data['navigation'], feedback_data['relevance'],
-        feedback_data['comprehensive'], feedback_data['useful_recommendations'], feedback_data['overall_satisfaction'],
-        feedback_data['recommend'], feedback_data['best_feature'], feedback_data['biggest_difficulty'],
-        feedback_data['missing_feature'], feedback_data['additional_comments']
-    ))
 
+    columns = ', '.join(feedback_data.keys())
+    placeholders = ', '.join(['?'] * len(feedback_data))
 
+    # Prepare the INSERT statement
+    sql = f"INSERT INTO feedback ({columns}) VALUES ({placeholders})"
+    c.execute(sql, tuple(feedback_data.values()))
 
     # Commit the transaction and close the connection
     conn.commit()
@@ -922,9 +908,6 @@ def submit_feedback():
 
     # Redirect to a thank you page or another appropriate page
     return redirect(url_for('thank_you'))
-
-    # Render the feedback form
-    return render_template('feedback.html')
 
 @app.route('/view_feedback')
 def view_feedback():
